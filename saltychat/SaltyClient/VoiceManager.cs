@@ -1049,7 +1049,7 @@ namespace SaltyClient
                 //    this.RangeNotification.Hide();
 
                 //this.RangeNotification = CitizenFX.Core.UI.Screen.ShowNotification(this.Configuration.VoiceRangeNotification.Replace("{voicerange}", this.VoiceRange.ToString()));
-                TriggerEvent("ad:showNotification", $"Portée de la voix :  {this.VoiceRange} mètres");
+                TriggerEvent("ad:showNotification", this.Configuration.VoiceRangeNotification.Replace("{voicerange}", this.VoiceRange.ToString()));
             }
         }
         #endregion
