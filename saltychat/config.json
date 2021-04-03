@@ -1,25 +1,25 @@
 {
   // Variables Guide: https://github.com/saltminede/saltychat-docs/blob/master/setup.md#config-variables
   "VoiceEnabled": true,
-  "ServerUniqueIdentifier": "NMjxHW5psWaLNmFh0+kjnQik7Qc=",
-  "MinimumPluginVersion": "2.2.0",
+  "ServerUniqueIdentifier": "Dr/AQSx1qdvCLvCXOSaexEmjYpY=",
+  "MinimumPluginVersion": "2.2.4",
   "SoundPack": "default",
-  "IngameChannelId": 25,
-  "IngameChannelPassword": "5V88FWWME615",
-  "SwissChannelIds": [ 61, 62 ],
+  "IngameChannelId": 34,
+  "IngameChannelPassword": "",
+  "SwissChannelIds": [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 24, 25, 26, 27, 28, 91, 29, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117],
   "VoiceRanges": [ 3.5, 8, 15, 32 ],
   "EnableVoiceRangeNotification": true,
-  "VoiceRangeNotification": "New voice range is {voicerange} metres.",
+  "VoiceRangeNotification": "Portée de la voix : {this.VoiceRange} mètres",
   "RadioType": 4,
   "EnableRadioHardcoreMode": true,
   "MegaphoneRange": 120.0,
-  "NamePattern": "[{serverid}] {guid}",
+  "NamePattern": "[{serverid}] Andrea",
   "RequestTalkStates": true,
   "RequestRadioTrafficStates": false,
 
   // Keybinds: https://docs.fivem.net/docs/game-references/input-mapper-parameter-ids/keyboard/
-  "ToggleRange": "F1",
-  "TalkPrimary": "N",
-  "TalkSecondary": "CAPITAL",
+  "ToggleRange": "W",
+  "TalkPrimary": "LMENU",
+  "TalkSecondary": "N",
   "TalkMegaphone": "B"
 }
