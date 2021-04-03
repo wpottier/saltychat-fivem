@@ -228,8 +228,6 @@ namespace SaltyClient
                 this.ExecuteCommand("connect", this.WebSocketAddress);
             else
                 Debug.WriteLine("[Salty Chat] Got server response, but NUI wasn't ready");
-
-            //VoiceManager.DisplayDebug(true);
         }
 
         [EventHandler(Event.SaltyChat_RemoveClient)]
@@ -268,8 +266,8 @@ namespace SaltyClient
                 CitizenFX.Core.Vector3 playerPosition = Game.PlayerPed.Position;
                 CitizenFX.Core.Vector3 remotePlayerPosition = client.LastPosition;
 
-                int signalDistortion = API.GetZoneScumminess(API.GetZoneAtCoords(playerPosition.X, playerPosition.Y, playerPosition.Z));
-                signalDistortion += API.GetZoneScumminess(API.GetZoneAtCoords(remotePlayerPosition.X, remotePlayerPosition.Y, remotePlayerPosition.Z));
+                //int signalDistortion = API.GetZoneScumminess(API.GetZoneAtCoords(playerPosition.X, playerPosition.Y, playerPosition.Z));
+                //signalDistortion += API.GetZoneScumminess(API.GetZoneAtCoords(remotePlayerPosition.X, remotePlayerPosition.Y, remotePlayerPosition.Z));
 
                 this.ExecuteCommand(
                     new PluginCommand(
@@ -277,7 +275,7 @@ namespace SaltyClient
                         this.Configuration.ServerUniqueIdentifier,
                         new PhoneCommunication(
                             client.TeamSpeakName,
-                            signalDistortion
+                            1
                         )
                     )
                 );
@@ -1047,10 +1045,11 @@ namespace SaltyClient
 
             if (this.Configuration.EnableVoiceRangeNotification)
             {
-                if (this.RangeNotification != null)
-                    this.RangeNotification.Hide();
+                //if (this.RangeNotification != null)
+                //    this.RangeNotification.Hide();
 
-                this.RangeNotification = CitizenFX.Core.UI.Screen.ShowNotification(this.Configuration.VoiceRangeNotification.Replace("{voicerange}", this.VoiceRange.ToString()));
+                //this.RangeNotification = CitizenFX.Core.UI.Screen.ShowNotification(this.Configuration.VoiceRangeNotification.Replace("{voicerange}", this.VoiceRange.ToString()));
+                TriggerEvent("ad:showNotification", $"Portée de la voix :  {this.VoiceRange} mètres");
             }
         }
         #endregion
@@ -1124,11 +1123,6 @@ namespace SaltyClient
         internal void ExecuteCommand(PluginCommand pluginCommand)
         {
             this.ExecuteCommand("runCommand", Util.ToJson(pluginCommand));
-        }
-
-        private void DisplayDebug(bool show)
-        {
-            this.ExecuteCommand("showBody", show);
         }
         #endregion
 
