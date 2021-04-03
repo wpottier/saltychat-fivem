@@ -1,5 +1,4 @@
 {
-  // Variables Guide: https://github.com/saltminede/saltychat-docs/blob/master/setup.md#config-variables
   "VoiceEnabled": true,
   "ServerUniqueIdentifier": "Dr/AQSx1qdvCLvCXOSaexEmjYpY=",
   "MinimumPluginVersion": "2.2.4",
@@ -16,8 +15,6 @@
   "NamePattern": "[{serverid}] Andrea",
   "RequestTalkStates": true,
   "RequestRadioTrafficStates": false,
-
-  // Keybinds: https://docs.fivem.net/docs/game-references/input-mapper-parameter-ids/keyboard/
   "ToggleRange": "W",
   "TalkPrimary": "LMENU",
   "TalkSecondary": "N",
