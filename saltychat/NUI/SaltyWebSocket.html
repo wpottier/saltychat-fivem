@@ -2,14 +2,9 @@
 <html>
 <head>
     <title>Salty Chat WebSocket</title>
-
-    <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
 </head>
-<body style="display: none; font-family:Arial; font-size:26px; color:white; outline:thin; outline-color:black; text-shadow: 1px 1px 1px black">
-	<div id="demo">
-	</div>
-	
-	<script>
+<body style="display: none;">
+    <script>
         let pluginAddress = "127.0.0.1:8088";
 		let isConnected = false;
         let serverUniqueIdentifierFilter = null;
@@ -28,14 +23,15 @@
 
             console.log("connecting...");
 
-            try{
+            try {
                 window.webSocket = new window.WebSocket(`ws://${pluginAddress}/`);
             }
-            catch{
+            catch {
                 // do nothing
+                return
             }
 
-            webSocket.onmessage = function (evt) {
+            webSocket.onmessage = (evt) => {
                 let object = JSON.parse(evt.data);
                 if (typeof serverUniqueIdentifierFilter === "string")
                 {
@@ -53,16 +49,15 @@
                 }
 
                 packetsReceived++;
-                updateHtml();
             };
 
-            webSocket.onopen = function () {
+            webSocket.onopen = () => {
                 isConnected = true;
 
                 sendNuiData("SaltyChat_OnConnected");
             };
 
-            webSocket.onclose = function () {
+            webSocket.onclose = () => {
                 isConnected = false;
 
                 sendNuiData("SaltyChat_OnDisconnected");
@@ -71,24 +66,20 @@
             }
         }
 
-        function setWebSocketAddress(address)
-        {
-            if (typeof address === "string")
+        function setWebSocketAddress(address) {
+            if (typeof address === "string") {
                 pluginAddress = address;
+            }
         }
 
-        function setServerUniqueIdentifierFilter(serverUniqueIdentifier)
-        {
+        function setServerUniqueIdentifierFilter(serverUniqueIdentifier) {
             if (typeof serverUniqueIdentifier === "string")
                 serverUniqueIdentifierFilter = serverUniqueIdentifier;
         }
 		
-		function runCommand(command)
-        {
-            if (!isConnected || typeof command !== "string")
-            {
+		function runCommand(command) {
+            if (!isConnected || typeof command !== "string") {
                 lastCommand = "unexpected command";
-                updateHtml();
 
                 return;
             }
@@ -97,66 +88,33 @@
 
             packetsSent++;
             lastCommand = command;
-            updateHtml();
-		}
+	    }
 
-        function updateHtml()
-        {
-            $("#demo").html(`Last Command: ${lastCommand}</br>Packets Sent: ${packetsSent}</br>Packets Received ${packetsReceived}`);
+        function sendNuiData(event, data) {
+            await fetch(`https://saltychat/${event}`, {
+                method: 'post',
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+                body: JSON.stringify(data),
+            })
         }
 
-        function sendNuiData(event, data)
-        {
-            if (typeof data === "undefined")
-            {
-                $.post(`http://saltychat/${event}`);
-            }
-            else
-            {
-                $.post(`http://saltychat/${event}`, data);
-            }
-        }
+        window.addEventListener("DOMContentLoaded", () => sendNuiData("SaltyChat_OnNuiReady"));
 
-        function showBody(show)
-        {
-            if (show)
-            {
-                $("body").show();
-            }
-            else
-            {
-                $("body").hide();
-            }
-        }
-
-        $(function()
-        {
-            window.addEventListener("DOMContentLoaded", function(){
-                //connect();
-                updateHtml();
-
-                sendNuiData("SaltyChat_OnNuiReady");
-            });
-
-            window.addEventListener('message', function(event)
-            {
-                if (typeof event.data.Function === "string")
-                {
-                    if (typeof event.data.Params === "undefined")
-                    {
-                        window[event.data.Function]();
-                    }
-                    else if (Array.isArray(event.data.Params) && event.data.Params.length == 1)
-                    {
-                        window[event.data.Function](event.data.Params[0]);
-                    }
-                    else
-                    {
-                        window[event.data.Function](event.data.Params);
-                    }
+        window.addEventListener('message', (event) => {
+            if (typeof event.data.Function === "string") {
+                if (typeof event.data.Params === "undefined") {
+                    window[event.data.Function]();
                 }
-            }, false);
-        });
+                else if (Array.isArray(event.data.Params) && event.data.Params.length == 1) {
+                    window[event.data.Function](event.data.Params[0]);
+                }
+                else {
+                    window[event.data.Function](event.data.Params);
+                }
+            }
+        }, false);
 	</script>
 </body>
 </html>
